@@ -1,0 +1,27 @@
+{
+  "name": "ark-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npx @tailwindcss/cli -i ./view/styles.css -o ./static/css/tailwind.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BennetLe/ark-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BennetLe/ark-manager/issues"
+  },
+  "homepage": "https://github.com/BennetLe/ark-manager#readme",
+  "description": "",
+  "devDependencies": {
+    "tailwindcss": "^4.1.5"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.5"
+  }
+}
