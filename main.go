@@ -22,7 +22,10 @@ func main() {
 	userAuth := router.Group("/")
 	userAuth.Use(UserAuth())
 
-	c := layout.Base(view.Index())
+	children := []templ.Component{
+		view.Index(),
+	}
+	c := layout.Base(partial.Sidebar(), children...)
 	userAuth.GET("/", gin.WrapH(templ.Handler(c)))
 
 	router.GET("/login", gin.WrapH(templ.Handler(layout.Login())))
@@ -38,7 +41,8 @@ func UserAuth() gin.HandlerFunc {
 		session := sessions.Default(ctx)
 		user := session.Get("user")
 		if user == nil {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "Please log in first"})
+			ctx.Redirect(http.StatusFound, "/login")
+			return
 		}
 		ctx.Set("user", user)
 		ctx.Next()
@@ -57,5 +61,5 @@ func loginHandler(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized", "password": password})
+	ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
 }

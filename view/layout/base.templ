@@ -1,6 +1,6 @@
 package layout
 
-templ Base(children ...templ.Component) {
+templ Base(sidebar templ.Component,children ...templ.Component) {
     <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -9,15 +9,18 @@ templ Base(children ...templ.Component) {
             <title>Hello, TEMPL</title>
             <!-- tailwind css -->
             <link href="/static/css/tailwind.css" rel="stylesheet"/>
-        </head>
-        <body>
-            for _, child := range children {
-                @child
-            }
             <!-- htmx -->
             <script src="https://unpkg.com/htmx.org@1.9.10"></script>
             <!-- alpineJS -->
             <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+        </head>
+        <body>
+            @sidebar
+            for _, child := range children {
+                @child
+            }
+            <a href="/login" class="flex justify-center mt-10 font-bold bg-blue">Login</a>
         </body>
     </html>
 }
