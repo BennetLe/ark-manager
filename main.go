@@ -4,20 +4,19 @@ import (
 	"ark-manager/view"
 	"ark-manager/view/layout"
 	"ark-manager/view/partial"
-	"log"
-	"net/http"
 
 	"github.com/a-h/templ"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("./static"))
-	http.Handle("/static/", http.StripPrefix("/static", fs))
+	router := gin.Default()
+	router.Static("/static/", "./static")
 
 	c := layout.Base(view.Index())
-	http.Handle("/", templ.Handler(c))
+	router.GET("/", gin.WrapH(templ.Handler(c)))
 
-	http.Handle("/foo", templ.Handler(partial.Foo()))
+	router.GET("/foo", gin.WrapH(templ.Handler(partial.Foo())))
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	router.Run(":8080")
 }
